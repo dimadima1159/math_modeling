@@ -16,9 +16,6 @@ def move_func(s, t):
      x3, v_x3, y3, v_y3,
      x4, v_x4, y4, v_y4) =s
   
-
-
-
     dxdt1 = v_x1
     dv_xdt1 = - G * m * x1 / (x1**2 + y1**2)**1.5
     dydt1 = v_y1
@@ -42,7 +39,7 @@ def move_func(s, t):
     return (dxdt1, dv_xdt1, dydt1, dv_ydt1,
             dxdt2, dv_xdt2, dydt2, dv_ydt2,
             dxdt3, dv_xdt3, dydt3, dv_ydt3,
-            dxdt4, dv_xdt4, dydt4, dv_ydt4
+            dxdt4, dv_xdt4, dydt4, dv_ydt4)
 
 
 # Определяем начальные значения и параметры
@@ -70,7 +67,7 @@ y40 = 228 * 10**9
 v_y40 = 0
 
 s0 = (x10, v_x10, y10, v_y10,
-      x20, v_x20, y20, v_y20
+      x20, v_x20, y20, v_y20,
       x30, v_x30, y30, v_y30,
       x40, v_x40, y40, v_y40)
 
@@ -95,7 +92,7 @@ def solve_func(i, key):
         y3 = sol[:i, 10]
         x4 = sol[:i, 12]
         y4 = sol[:i, 14]
-    return ((x1, y1), (x2, y2)), ((x3, y3), (x4, y4))
+    return ((x1, y1), (x2, y2), (x3, y3), (x4, y4))
 
 # Строим решение в виде графика и анимируем
 fig, ax = plt.subplots()
@@ -106,11 +103,11 @@ ball_line1, = plt.plot([], [], '-', color='b')
 ball2, = plt.plot([], [], 'o', color='r')
 ball_line2, = plt.plot([], [], '-', color='r')
 
-ball3, = plt.plot([], [], 'o', color='g')
-ball_line3, = plt.plot([], [], '-', color='g')
+ball3, = plt.plot([], [], 'o', color='lime')
+ball_line3, = plt.plot([], [], '-', color='lime')
 
-ball4, = plt.plot([], [], 'o', color='p')
-ball_line4, = plt.plot([], [], '-', color='pyplot')
+ball4, = plt.plot([], [], 'o', color='gold')
+ball_line4, = plt.plot([], [], '-', color='gold')
 
 plt.plot([0], [0], 'o', color='y', ms=20)
 
@@ -120,6 +117,12 @@ def animate(i):
 
     ball2.set_data(solve_func(i, 'point')[1])
     ball_line2.set_data(solve_func(i, 'line')[1])
+
+    ball3.set_data(solve_func(i, 'point')[2])
+    ball_line3.set_data(solve_func(i, 'line')[2])
+
+    ball4.set_data(solve_func(i, 'point')[3])
+    ball_line4.set_data(solve_func(i, 'line')[3])
 
 ani = FuncAnimation(fig,
                     animate,
